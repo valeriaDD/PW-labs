@@ -1,0 +1,56 @@
+.promise {
+  margin-top: 7rem;
+  position: absolute;
+  left: -7rem;
+  right: -7rem;
+  background: $--bright-orange;
+  padding: 5rem 10rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__header {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bolder;
+    z-index: 1;
+  }
+
+  &__description {
+    font-size: 1rem;
+    font-weight: normal;
+    padding: 1.5rem 20rem;
+  }
+
+  .mango--right {
+    width: 9rem;
+    position: absolute;
+    right: 15px;
+    top: 70px;
+    z-index: 1;
+  }
+
+  .bananas--bottom-right {
+    width: 9rem;
+    position: absolute;
+    left: 2rem;
+    bottom: 4rem;
+    z-index: 1;
+  }
+
+  .dots {
+    &--top-left {
+      position: absolute;
+      left: -2rem;
+      z-index: 1;
+    }
+
+    &--bottom-right {
+      position: absolute;
+      right: -1rem;
+      top: 55vh;
+      z-index: 1;
+    }
+  }
+}

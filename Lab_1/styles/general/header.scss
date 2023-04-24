@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+
+  &__section {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+
+    .action {
+      width: 1.2rem;
+    }
+
+    .nav {
+      display: flex;
+      gap: 0.8rem;
+      color: $--orange;
+    }
+  }
+}
+

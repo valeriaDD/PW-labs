@@ -1,0 +1,29 @@
+$--orange: #d45b30;
+$--bright-orange: #f4581f;
+$--beige: #f4d5ae;
+$--yellow: #f5bf43;
+$--black: #000000;
+
+.main {
+  font-size: 16px;
+  padding: 2rem 7rem;
+  font-family: "raleway", sans-serif;
+  font-weight: bold;
+  font-style: normal;
+  position: relative;
+  overflow: hidden;
+  background: $--beige;
+
+  .texture {
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+  }
+  .content {
+    position: relative;
+  }
+}

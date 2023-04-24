@@ -1,0 +1,20 @@
+.button {
+  background-color: transparent;
+  border: 2px solid $--black;
+  border-radius: 1rem;
+  min-width: 7rem;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  &--orange-bg {
+    background: $--orange;
+    color: $--beige;
+  }
+
+  &--orange-text {
+    color: $--orange;
+    background: $--beige;
+  }
+}

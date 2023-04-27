@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import MiawComponent from "@/components/MiawComponent";
+import MiawComponent from "@/components/DashboardPage.vue";
 import AuthComponent from "@/components/auth/AuthComponent";
 import LogIn from "@/components/auth/LogIn";
 import RegisterComponent from "@/components/auth/RegisterComponent";

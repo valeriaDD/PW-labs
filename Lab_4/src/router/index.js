@@ -1,45 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import MiawComponent from "@/components/DashboardPage.vue";
-import AuthComponent from "@/components/auth/AuthComponent";
-import LogIn from "@/components/auth/LogIn";
-import RegisterComponent from "@/components/auth/RegisterComponent";
-import ForgotPasswordComponent from "@/components/auth/ForgotPasswordComponent";
-import ResetPasswordComponent from "@/components/auth/ResetPasswordComponent";
+import DashboardPage from "@/components/DashboardPage.vue";
+import QuizzesPage from "@/components/QuizzesPage.vue";
+import QuizPage from "@/components/QuizPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        component: AuthComponent,
-        redirect: { name: 'Login' },
-        children: [
-            {
-                path: '/login',
-                name: 'Login',
-                component: LogIn
-            },
-            {
-                path: '/register',
-                name: 'Register',
-                component: RegisterComponent
-            },
-            {
-                path: '/forgot-password',
-                name: 'ForgotPassword',
-                component: ForgotPasswordComponent
-            },
-            {
-                path: '/reset-password',
-                name: 'ResetPassword',
-                component: ResetPasswordComponent
-            },
-        ]
+        name: 'Dashboard',
+        component: DashboardPage
     },
     {
-        path: '/miaw',
-        component: MiawComponent
+        path: '/quizzes',
+        name: 'Quizzes',
+        component: QuizzesPage
+    },
+    {
+        path: '/quizzes/1',
+        name: 'Quiz',
+        component: QuizPage
     },
 ];
 

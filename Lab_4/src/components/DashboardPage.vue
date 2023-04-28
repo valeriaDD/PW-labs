@@ -1,27 +1,50 @@
 <template>
   <div class="dashboard-page">
     <h1 class="app-name">exQuiz me?!</h1>
-    <bubbles-component/>
+    <el-col class="register-component" :lg="6" :sm="8" :xs="20">
+      <el-form class="register-component__form">
+        <el-form-item >
+          <el-input v-model="name" placeholder="Name"/>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="surname" placeholder="Surname"/>
+        </el-form-item>
+      </el-form>
+      <el-button class="register-component__action" @click="submit" round> Play </el-button>
+    </el-col>
+    <falling-stars-component/>
   </div>
 </template>
 
 <script>
-import BubblesComponent from "@/components/BubblesComponent.vue";
+import FallingStarsComponent from "@/components/FallingStarsComponent.vue";
 
 export default {
   name: 'DashboardPage',
-  components: {BubblesComponent}
+  components: {FallingStarsComponent},
+  data() {
+    return {
+      name: "",
+      surname: "",
+    };
+  },
+  methods: {
+    submit() {
+      console.log(this.name + " " + this.surname)
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 .dashboard-page {
+  background-image: url('@/assets/forest.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 55%;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #6441A5; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #2a0845, #6441A5); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #2a0845, #6441A5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   justify-content: center;
   bottom: 0;
   left: 0;
@@ -33,5 +56,22 @@ export default {
     color: white;
     font-size: 3rem;
   }
+
+  .register-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    &__form {
+      width: 100%;
+    }
+
+    &__action {
+      width: fit-content;
+      min-width: 7rem;
+    }
+  }
+
 }
 </style>

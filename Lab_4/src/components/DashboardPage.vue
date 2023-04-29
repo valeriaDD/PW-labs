@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import FallingStarsComponent from "@/components/FallingStarsComponent.vue";
+import FallingStarsComponent from "@/components/animated/FallingStarsComponent.vue";
 
 export default {
   name: 'DashboardPage',
@@ -72,6 +72,5 @@ export default {
       min-width: 7rem;
     }
   }
-
 }
 </style>

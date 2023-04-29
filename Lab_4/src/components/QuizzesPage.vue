@@ -1,9 +1,7 @@
 <template>
 <div class="container">
-  <div class="cover"></div>
-  <div class="title">
-    Game is on, what's your pick?
-  </div>
+  <div class="cover"/>
+  <div class="title"> Game is on, what's your pick? </div>
   <el-col class="quizzes-container" :lg="16" :sm="18" :xs="23">
     <quiz-card-component
         class="quiz-item" v-for="(card, index) in [1, 2, 3, 4,5, 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]"
@@ -11,11 +9,12 @@
         :style="{ backgroundColor: pastelColors[index % pastelColors.length] }"
     />
   </el-col>
+  <router-view/>
 </div>
 </template>
 
 <script>
-import QuizCardComponent from "@/components/QuizCardComponent.vue";
+import QuizCardComponent from "@/components/common/QuizCardComponent.vue";
 
 export default {
   name: "QuizzesPage",

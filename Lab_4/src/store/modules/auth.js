@@ -12,7 +12,6 @@ const actions = {
     login({commit}, {email, password}) {
         commit("SET_REQUEST_START");
         try {
-            // sent to backend:
             console.log({email, password})
             commit("SET_REQUEST_END");
         } catch (e) {

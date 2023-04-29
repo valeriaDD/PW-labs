@@ -1,0 +1,23 @@
+.dialog {
+  .el-dialog {
+    border-radius: 0.5rem;
+
+    &__body {
+      max-height: calc(100vh - 25rem);
+      overflow: auto;
+    }
+
+    &__header {
+      .el-dialog__title {
+        color: #482b47;
+        font-weight: bolder;
+        font-size: 1.3rem;
+      }
+    }
+
+    &__close {
+      font-size: 1.3rem;
+      font-weight: bolder;
+    }
+  }
+}

@@ -30,7 +30,10 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.name + " " + this.surname)
+      this.$store.dispatch("profile/createUser", {
+        name: this.name,
+        surname: this.surname,
+      })
     }
   }
 }

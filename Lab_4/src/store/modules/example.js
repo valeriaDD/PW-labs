@@ -5,11 +5,11 @@ const getters = {};
 
 const actions = {};
 
-const mutators = {};
+const mutations = {};
 
 export default {
     state,
     getters,
     actions,
-    mutators,
+    mutations,
 }

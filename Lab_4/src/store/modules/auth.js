@@ -1,31 +1,15 @@
 const state = {
-    token: "",
-    illegalCombination: false,
-    request: {
-        started: false,
-    }
+    token: "5d98f8bafbecc2328fbc24bc63fe400257844e2bd0c1a5340305ac04ef4b284f",
 };
 
-const getters = {};
-
-const actions = {
-    login({commit}, {email, password}) {
-        commit("SET_REQUEST_START");
-        try {
-            console.log({email, password})
-            commit("SET_REQUEST_END");
-        } catch (e) {
-            commit("SET_REQUEST_END");
-
-        }
+const getters = {
+    getToken(state) {
+        return state.token;
     }
 };
-
-const mutators = {};
 
 export default {
+    namespaced: true,
     state,
     getters,
-    actions,
-    mutators,
 }

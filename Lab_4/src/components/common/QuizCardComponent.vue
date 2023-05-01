@@ -1,8 +1,8 @@
 <template>
-<div class="card">
-  <div class="card__title"> Get to know the most powerful things in the whole word</div>
+<div class="card" @click="$router.push({name: 'Quiz', params: {id: quiz.id}})">
+  <div class="card__title"> {{quiz.title}} </div>
   <div class="card__footer">
-    <div class="question-count"> 25 quiestions </div>
+    <div class="question-count"> {{quiz.questions_count}} questions </div>
     <i class="icon el-icon-right" />
   </div>
 </div>
@@ -12,6 +12,12 @@
 
 export default {
   name: "QuizCardComponent",
+    props: {
+      quiz: {
+          type: Object,
+          required: true,
+      }
+    }
 }
 </script>
 

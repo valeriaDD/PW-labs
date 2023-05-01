@@ -2,7 +2,7 @@ import {createUser} from "@/services/restAPIs";
 
 const state = {
     userId: localStorage.getItem('id') ?? undefined,
-    completedQuizzes:  localStorage.getItem('completed') ?? [],
+    completedQuizzes:  JSON.parse(localStorage.getItem('completed')) ?? [],
     request: {
         started: false,
     },
@@ -29,7 +29,7 @@ const actions = {
         }
     },
     addFinishedQuiz({commit}, {id, score}) {
-        commit("ADD_COMPLETED_QUIZ", id, score)
+        commit("ADD_COMPLETED_QUIZ", {id: id, score: score})
     },
     logout({ commit }) {
         commit('REMOVE_USER')
@@ -45,9 +45,9 @@ const mutations = {
         state.userId = undefined;
         localStorage.removeItem('id');
     },
-    ADD_COMPLETED_QUIZ(state, id, score) {
+    ADD_COMPLETED_QUIZ(state, {id, score}) {
         state.completedQuizzes.push({id: id, score:score})
-        localStorage.setItem('completed', state.completedQuizzes);
+       localStorage.setItem('completed',  JSON.stringify(state.completedQuizzes));
     },
     SET_REQUEST_START(state) {
         state.request.started = true;

@@ -1,37 +1,42 @@
 <template>
-  <div class="question">
-    <div class="question__title">
-      <span> 1. </span> <span> How many legs does a spider have?</span>
+    <div class="question">
+        <div class="question__title">
+            <span> {{number ?? ''}}. </span> <span> {{question.question}}</span>
+        </div>
+        <el-form-item :error="''">
+            <el-radio-group class="answers" v-model="value" @change="addAnswer">
+                <el-radio :label="answer" class="radio-button" v-for="(answer, index) in question.answers" :key="index"/>
+            </el-radio-group>
+        </el-form-item>
     </div>
-    <el-form-item :error="'Correct answer is miaw'">
-      <el-radio-group class="answers" v-model="value">
-        <el-radio label="1" class="radio-button">Option AAOption AOption AOptioOption AAOption AOption AOption AOption
-          AOption AOption AOption A
-        </el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B Option B Option B Option B </el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B Option BOption B Option BOption B Option B</el-radio>
-        <el-radio label="2" class="radio-button">Option B</el-radio>
-      </el-radio-group>
-    </el-form-item>
-  </div>
 </template>
 
 <script>
 export default {
-  name: "QuestionComponent",
-  data() {
-    return {
-      value: '',
-    };
-  }
+    name: "QuestionComponent",
+    props: {
+        question: {
+            type: Object,
+            required: true,
+        },
+        number: {
+            type: Number,
+            default: null,
+        }
+    },
+    data() {
+        return {
+            value: '',
+        };
+    },
+    methods: {
+        addAnswer(value) {
+            this.$store.dispatch("quiz/addAnswer", {
+                question: this.question?.id,
+                answer: value,
+            })
+        }
+    }
 }
 </script>
 

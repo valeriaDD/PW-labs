@@ -4,16 +4,8 @@ export const createUser = ({name, surname}) => httpClient.post('/users', {
     name: name,
     surname: surname,
 });
+export const getQuizzes = () => httpClient.get('/quizzes', {});
 
-const showQuizzes = () => httpClient.post('/quizzes');
+export const getQuiz = (id) => httpClient.get(`/quizzes/${id}`, {});
 
-const getQuiz = (id) => httpClient.get(`/quizzes/${id}`);
-
-const submitQuiz = (id) => httpClient.post(`/quizzes/${id}/submit`);
-
-export default {
-    createUser,
-    showQuizzes,
-    getQuiz,
-    submitQuiz,
-}
+export const submitQuiz = (id, params) => httpClient.post(`/quizzes/${id}/submit`, params);

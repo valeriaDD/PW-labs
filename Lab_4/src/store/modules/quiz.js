@@ -1,4 +1,5 @@
 import {getQuiz, submitQuiz} from "@/services/restAPIs";
+import router from "@/router";
 
 const state = {
     quiz: {},
@@ -27,6 +28,9 @@ const actions = {
             commit("SET_QUIZ", response);
             commit("SET_REQUEST_END");
         } catch (e) {
+            if (e.response.status === 404) {
+                router.push({name: 'ErrorPage'})
+            }
             commit("SET_REQUEST_END");
         }
     },

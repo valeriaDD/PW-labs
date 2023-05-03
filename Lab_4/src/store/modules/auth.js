@@ -1,5 +1,5 @@
 const state = {
-    token: "5d98f8bafbecc2328fbc24bc63fe400257844e2bd0c1a5340305ac04ef4b284f",
+    token: "176687918888c30addfa5b2e7e21dd6627221005dfedb44f7d17d3c7e2254e8a",
 };
 
 const getters = {

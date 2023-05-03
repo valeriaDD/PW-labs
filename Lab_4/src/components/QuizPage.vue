@@ -79,8 +79,8 @@ export default {
             }
         }
     },
-    mounted() {
-        this.$store.dispatch('quiz/loadQuiz', this.quizId);
+    beforeCreate() {
+        this.$store.dispatch('quiz/loadQuiz', this.$route.params.id);
     },
     destroyed() {
         this.$store.dispatch('quiz/reset');

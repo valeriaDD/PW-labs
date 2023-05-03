@@ -1,41 +1,49 @@
 <template>
-  <div class="dashboard-page">
-    <h1 class="app-name">exQuiz me?!</h1>
-    <el-col class="register-component" :lg="6" :sm="8" :xs="20">
-      <el-form class="register-component__form">
-        <el-form-item >
-          <el-input v-model="name" placeholder="Name"/>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="surname" placeholder="Surname"/>
-        </el-form-item>
-      </el-form>
-      <el-button class="register-component__action" @click="submit" round> Play </el-button>
-    </el-col>
-    <falling-stars-component/>
-  </div>
+    <div class="dashboard-page">
+        <h1 class="app-name">exQuiz me?!</h1>
+        <el-col class="register-component" :lg="6" :sm="8" :xs="20">
+            <el-form class="register-component__form">
+                <el-form-item>
+                    <el-input v-model="name" placeholder="Name"/>
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="surname" placeholder="Surname"/>
+                </el-form-item>
+            </el-form>
+            <el-button class="register-component__action" @click="submit" round> Play</el-button>
+        </el-col>
+        <falling-stars-component/>
+    </div>
 </template>
 
 <script>
 import FallingStarsComponent from "@/components/animated/FallingStarsComponent.vue";
 
 export default {
-  name: 'DashboardPage',
-  components: {FallingStarsComponent},
-  data() {
-    return {
-      name: "",
-      surname: "",
-    };
-  },
-  methods: {
-    submit() {
-      this.$store.dispatch("profile/createUser", {
-        name: this.name,
-        surname: this.surname,
-      })
+    name: 'DashboardPage',
+    components: {FallingStarsComponent},
+    data() {
+        return {
+            name: "",
+            surname: "",
+        };
+    },
+    methods: {
+        submit() {
+            this.$store.dispatch("profile/createUser", {
+                name: this.name,
+                surname: this.surname,
+            }).then(() => {
+                this.$router.push({name: "Quizzes"})
+            }).catch((e) => {
+                this.$notify({
+                    title: 'Error',
+                    type: "error",
+                    message: e.response?.data?.message.toString() ?? e.toString(),
+                });
+            })
+        }
     }
-  }
 }
 </script>
 

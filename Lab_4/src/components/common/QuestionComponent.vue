@@ -1,6 +1,6 @@
 <template>
     <div class="question">
-        <div class="question__title">
+        <div class="question__title" :class="{correct: isInReview && correct, incorrect: isInReview && !correct}">
             <span> {{number ?? ''}}. </span> <span> {{question.question}}</span>
         </div>
         <el-form-item :error="''">
@@ -22,12 +22,21 @@ export default {
         number: {
             type: Number,
             default: null,
+        },
+        correct: {
+            type: Boolean,
+            default: undefined,
         }
     },
     data() {
         return {
             value: '',
         };
+    },
+    computed: {
+        isInReview() {
+            return typeof this.correct !== 'undefined';
+        }
     },
     methods: {
         addAnswer(value) {
@@ -41,6 +50,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.correct {
+    color: green !important;
+}
+
+.incorrect {
+    color: red !important;
+
+}
+
 .question {
   .question__title {
     font-weight: bolder;

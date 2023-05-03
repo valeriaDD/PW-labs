@@ -4,7 +4,7 @@ const state = {
     quiz: {},
     questionsCount: 0,
     correctAnswersCount: 0,
-    answers: [],
+    score: undefined,
     request: {
         started: false,
     }
@@ -13,6 +13,9 @@ const state = {
 const getters = {
     getQuiz(state) {
         return state.quiz;
+    },
+    getScore(state) {
+        return state.score;
     }
 };
 
@@ -27,32 +30,33 @@ const actions = {
             commit("SET_REQUEST_END");
         }
     },
-    async submitAnswers({commit, rootGetters, state, dispatch}, {id}) {
+    async submitAnswers({commit, rootGetters, state}, {id}) {
         commit("SET_REQUEST_START");
         try {
             const userId = await rootGetters['profile/getUser']
-            await commit("ADD_USER_ID_TO_ANSWERS", userId)
 
-            for (const answer of state.answers) {
-                let response = await submitQuiz(id, answer);
-                commit("ADD_ANSWER_RESULTS", {questionId: answer.question_id, response: response})
+            for (const question of state.quiz.questions) {
+                let response = await submitQuiz(id, {
+                    user_id: userId,
+                    question_id: question.id,
+                    answer: question.userChoice ?? '',
+                });
+
+                commit("ADD_ANSWER_RESULTS", {questionId: question.id, response: response})
             }
 
-            dispatch("countCorrectAnswers");
+            commit("COUNT_CORRECT_ANSWERS")
             commit("SET_REQUEST_END");
         } catch (e) {
-            console.log(e)
             commit("SET_REQUEST_END");
         }
     },
-    countCorrectAnswers({commit, state, dispatch}) {
-        commit("COUNT_CORRECT_ANSWERS")
-        const score = `${state.correctAnswersCount}/${state.questionsCount}`
-        dispatch("profile/addFinishedQuiz", {id: state.quiz.id, score: score}, { root: true });
-    },
     addAnswer({commit}, {question, answer}) {
         commit("ADD_ANSWER", {question: question, answer: answer});
-    }
+    },
+    reset({commit}) {
+        commit("RESET_QUIZ_DATA");
+    },
 };
 
 const mutations = {
@@ -67,33 +71,31 @@ const mutations = {
         state.request.started = false;
     },
     ADD_ANSWER(state, {question, answer}) {
-        const result = state.answers.find(item => parseInt(item.question_id) === parseInt(question))
+        const result = state.quiz.questions.find(item => parseInt(item.id) === parseInt(question))
 
         if (result) {
-            result.answer = answer;
-        } else {
-            state.answers.push({
-                question_id: question,
-                answer: answer,
-                user_id: undefined,
-                correct: undefined,
-                correct_answer: undefined,
-            })
+            result.userChoice = answer;
         }
-    },
-    ADD_USER_ID_TO_ANSWERS(state, user_id) {
-        state.answers.forEach(answer => answer.user_id = user_id)
     },
     ADD_ANSWER_RESULTS(state, {questionId, response}) {
-        const result = state.answers.find(item => parseInt(item.question_id) === parseInt(questionId))
+        let quizAnswer = state.quiz.questions.find((item) => parseInt(item.id) === parseInt(questionId))
 
-        if (result) {
-            result.correct = response.correct;
-            result.correct_answer = response.correct_answer;
+        if (quizAnswer) {
+            quizAnswer.correct = response.correct;
+            quizAnswer.correct_answer = response.correct_answer;
         }
+
+        state.quiz = {...state.quiz}
     },
     COUNT_CORRECT_ANSWERS(state) {
-        state.correctAnswersCount = state.answers.filter(answer => answer.correct).length;
+        state.correctAnswersCount = state.quiz.questions.filter(answer => answer.correct).length;
+        state.score = `${state.correctAnswersCount}/${state.questionsCount}`;
+    },
+    RESET_QUIZ_DATA(state) {
+        state.quiz = {};
+        state.questionsCount = 0;
+        state.score = undefined;
+        state.correctAnswersCount = 0;
     },
 }
 

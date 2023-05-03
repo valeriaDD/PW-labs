@@ -2,7 +2,7 @@
   <div class="score-container">
     <div class="score-container__header"> Your score is</div>
     <div class="score-container__score"> {{score}} </div>
-    <img src="@/assets/trophy_img.png" height="200">
+    <img src="@/assets/trophy_img.png" :height="imgHeight">
   </div>
 </template>
 
@@ -13,6 +13,10 @@ export default {
       score: {
           type: String,
           default: "0/0"
+      },
+      imgHeight: {
+          type: Number,
+          default: 200,
       }
     }
 }

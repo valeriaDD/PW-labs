@@ -6,11 +6,11 @@
             :title="quiz.title"
             class="dialog">
 
-        <quiz-score-component v-if="completedQuiz" :score="score"/>
+        <quiz-score-component v-if="completedQuiz" :score="completedQuizScore"/>
         <quiz-form-component v-else/>
 
         <span slot="footer" class="dialog-footer" v-if="!completedQuiz">
-          <el-button type="primary" @click="submitAnswers">Submit</el-button>
+          <el-button type="primary" @click="submitAnswers">{{inReview ? 'Ok' : 'Submit' }}</el-button>
         </span>
     </el-dialog>
 </template>
@@ -39,24 +39,51 @@ export default {
         completedQuiz() {
             return this.completedQuizzes.find(quiz => parseInt(quiz.id) === parseInt(this.quizId));
         },
-        score() {
+        completedQuizScore() {
             return this.completedQuiz.score;
+        },
+        score() {
+            return this.$store.getters['quiz/getScore'];
+        },
+        inReview() {
+            return typeof this.score !== 'undefined';
         },
     },
     methods: {
         handleDialogClose() {
             this.$confirm('Are you sure to close this dialog?')
                 .then(() => {
+                    if (this.inReview) {
+                        this.pushToStorage()
+                    }
                     this.$router.push({name: "Quizzes"})
                 })
                 .catch(() => {})
         },
+        pushToStorage() {
+            this.$store.dispatch('profile/addFinishedQuiz', {
+                id: this.quizId,
+                score: this.score,
+            });
+        },
         submitAnswers() {
-            this.$store.dispatch('quiz/submitAnswers', {id: this.quizId})
+            if (this.inReview) {
+                this.$store.dispatch('profile/addFinishedQuiz', {
+                    id: this.quizId,
+                    score: this.score,
+                });
+
+                this.$router.push({name: "Quizzes"})
+            } else {
+                this.$store.dispatch('quiz/submitAnswers', {id: this.quizId})
+            }
         }
     },
     mounted() {
         this.$store.dispatch('quiz/loadQuiz', this.quizId);
+    },
+    destroyed() {
+        this.$store.dispatch('quiz/reset');
     }
 }
 </script>

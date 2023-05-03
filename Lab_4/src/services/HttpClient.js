@@ -15,44 +15,25 @@ class HttpClient {
     }
 
     async get(url, params) {
-        try {
-            const response = await this.client.get(url, { params });
-            return response.data;
-        } catch (error) {
-            this.handleError(error);
-        }
+        const response = await this.client.get(url, {params});
+        return response.data;
     }
 
     async post(url, data) {
-        try {
-            const response = await this.client.post(url, {data: data});
-            return response.data;
-        } catch (error) {
-            this.handleError(error);
-        }
+        const response = await this.client.post(url, {data: data});
+        return response.data;
     }
 
     async put(url, data) {
-        try {
-            const response = await this.client.put(url, data);
-            return response.data;
-        } catch (error) {
-            this.handleError(error);
-        }
+        const response = await this.client.put(url, data);
+        return response.data;
     }
 
     async delete(url) {
-        try {
-            const response = await this.client.delete(url);
-            return response.data;
-        } catch (error) {
-            this.handleError(error);
-        }
+        const response = await this.client.delete(url);
+        return response.data;
     }
 
-    handleError(error) {
-        console.log('An error occurred:', error);
-    }
 }
 
 const httpClient = new HttpClient('https://late-glitter-4431.fly.dev/api/v54');

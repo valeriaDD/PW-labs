@@ -1,9 +1,9 @@
 <template>
     <div class="question">
         <div class="question__title" :class="{correct: isInReview && correct, incorrect: isInReview && !correct}">
-            <span> {{number ?? ''}}. </span> <span> {{question.question}}</span>
+            <span> {{ number ?? '' }}. </span> <span> {{ question.question }}</span>
         </div>
-        <el-form-item :error="''">
+        <el-form-item>
             <el-radio-group class="answers" v-model="value" @change="addAnswer">
                 <el-radio :label="answer" class="radio-button" v-for="(answer, index) in question.answers" :key="index"/>
             </el-radio-group>
@@ -51,12 +51,11 @@ export default {
 
 <style scoped lang="scss">
 .correct {
-    color: green !important;
+  color: green !important;
 }
 
 .incorrect {
-    color: red !important;
-
+  color: red !important;
 }
 
 .question {

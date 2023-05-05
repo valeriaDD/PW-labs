@@ -7,10 +7,10 @@
             class="dialog">
 
         <quiz-score-component v-if="completedQuiz" :score="completedQuizScore"/>
-        <quiz-form-component v-else/>
+        <quiz-form-component ref="quizForm" v-else/>
 
         <span slot="footer" class="dialog-footer" v-if="!completedQuiz">
-          <el-button type="primary" @click="submitAnswers">{{inReview ? 'Ok' : 'Submit' }}</el-button>
+          <el-button type="primary" @click="submitAnswers">{{ inReview ? 'Ok' : 'Submit' }}</el-button>
         </span>
     </el-dialog>
 </template>
@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         quiz() {
-          return this.$store.getters['quiz/getQuiz'];
+            return this.$store.getters['quiz/getQuiz'];
         },
         completedQuizzes() {
             return this.$store.getters['profile/getCompletedQuizzes']
@@ -48,6 +48,10 @@ export default {
         inReview() {
             return typeof this.score !== 'undefined';
         },
+        allQuestionsAnswered() {
+            console.log()
+            return this.quiz.questions.every((question) => !!question.userChoice)
+        }
     },
     methods: {
         handleDialogClose() {
@@ -58,7 +62,8 @@ export default {
                     }
                     this.$router.push({name: "Quizzes"})
                 })
-                .catch(() => {})
+                .catch(() => {
+                })
         },
         pushToStorage() {
             this.$store.dispatch('profile/addFinishedQuiz', {
@@ -75,7 +80,16 @@ export default {
 
                 this.$router.push({name: "Quizzes"})
             } else {
-                this.$store.dispatch('quiz/submitAnswers', {id: this.quizId})
+                const allQuestionAnswered = this.quiz.questions.every((question) => !!question.userChoice)
+                if (allQuestionAnswered) {
+                    this.$store.dispatch('quiz/submitAnswers', {id: this.quizId})
+                } else {
+                    this.$notify({
+                        title: 'Error',
+                        type: "error",
+                        message: "Select answers for all questions.",
+                    });
+                }
             }
         }
     },

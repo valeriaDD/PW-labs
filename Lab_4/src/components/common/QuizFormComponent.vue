@@ -19,6 +19,11 @@ import QuizScoreComponent from "@/components/common/QuizScoreComponent.vue";
 export default {
     name: "QuizFormComponent",
     components: {QuizScoreComponent, QuestionComponent},
+    data() {
+        return {
+            value: {},
+        }
+    },
     computed: {
         quiz() {
             return this.$store.getters["quiz/getQuiz"];
@@ -28,8 +33,18 @@ export default {
         },
         score() {
             return this.$store.getters["quiz/getScore"];
-        }
+        },
     },
+    methods: {
+        validateAnswers(rule, value, callback) {
+            const unansweredQuestions = this.questions.filter(q => !q.answered);
+            if (unansweredQuestions.length > 0) {
+                callback(new Error(`Please answer question ${unansweredQuestions[0].id}`));
+            } else {
+                callback();
+            }
+        }
+    }
 }
 </script>
 

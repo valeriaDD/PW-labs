@@ -1,16 +1,18 @@
 from flask import Flask
-from NewsAPI import NewsAPI
+from news.NewsApiAdapter import NewsApiAdapter
 from telegram.ext import Updater, CommandHandler
 import os
 
 app = Flask(__name__)
 db = []
 
+newsAPI = NewsApiAdapter("fc9232e093cb4d278cdeca26cd049a5f")
+
 
 @app.route("/")
 def hello_world():
     news_token = os.environ.get('NEWS_API_TOKEN')
-    newsAPI = NewsAPI(news_token)
+    newsAPI = NewsApiAdapter(news_token)
 
     return newsAPI.get_news('test')
 
@@ -20,14 +22,12 @@ def start(update, context):
 
 
 def list(update, context):
+    user_says = None
+
     if len(context.args) > 0:
         user_says = " ".join(context.args)
-        print(user_says)
 
-    news_token = os.environ.get('NEWS_API_TOKEN')
-    newsAPI = NewsAPI(news_token)
-
-    news = newsAPI.get_news('test')
+    news = newsAPI.get_news(user_says)
 
     for new in news:
         context.bot.send_message(chat_id=update.effective_chat.id, text=new)
@@ -36,7 +36,6 @@ def list(update, context):
 def save(update, context):
     if len(context.args) > 0:
         user_says = " ".join(context.args)
-        print(user_says)
         db.append({'id': update.effective_chat.id, 'data': user_says})
 
 
@@ -52,6 +51,8 @@ def show(update, context):
 
 if __name__ == "__main__":
     token = '5857957671:AAF4O8AjoU1AGNqZ2DUUTknT-1CwTdRNFVw'
+    # token = os.environ.get("TELEGRAM_BOT_TOKEN")
+
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
 
@@ -61,5 +62,5 @@ if __name__ == "__main__":
     dispatcher.add_handler(CommandHandler('show', show))
 
     updater.start_polling()
-
     app.run()
+

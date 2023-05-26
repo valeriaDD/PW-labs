@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
 
-class TelegramApiProvider(ABC):
+class TelegramApiInterface(ABC):
     @abstractmethod
     def add_command(self, name, implementation):
         pass
 
     @abstractmethod
-    def start(self):
+    def process_update(self, update):
         pass
